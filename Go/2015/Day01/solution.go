@@ -1,18 +1,22 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"strings"
 )
 
 func main() {
-	input := readInput()
+	inputFileName := flag.String("input", "input.txt", "Path to the input file")
+	flag.Parse()
 
-	// timesGoUp := strings.Count(input, "(")
-	// timesGoDown := strings.Count(input, ")")
+	input, err := readInput(*inputFileName)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 
-	// finalFloor := timesGoUp - timesGoDown
 	finalFloor := 0
 
 	firstNeagtiveFound := false
@@ -35,12 +39,11 @@ func main() {
 	fmt.Printf("First position when santa enters the basement: %d\n", firstNegative)
 }
 
-func readInput() string {
-	f, err := os.ReadFile("input.txt")
+func readInput(filename string) (string, error) {
+	data, err := os.ReadFile(filename)
 	if err != nil {
-		fmt.Println("Unable to read file")
-		os.Exit(1)
+		return "", fmt.Errorf("Failed to read file '%s': %w", filename, err)
 	}
-
-	return string(f)
+	content := strings.TrimSpace(string(data))
+	return content, nil
 }
