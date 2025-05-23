@@ -20,6 +20,7 @@ func main() {
 
 	parsedDimensions := parseInput(input)
 	fmt.Println(calculateRequiredPaper(parsedDimensions))
+	fmt.Println(calculateRequiredRibbon(parsedDimensions))
 }
 
 func parseInput(input string) [][]string {
@@ -45,6 +46,20 @@ func calculateRequiredPaper(list [][]string) int {
 		totalPaper += requiredPaper
 	}
 	return totalPaper
+}
+
+func calculateRequiredRibbon(list [][]string) int {
+	totalRibbon := 0
+
+	for _, d := range list {
+		l, _ := strconv.Atoi(d[0])
+		w, _ := strconv.Atoi(d[1])
+		h, _ := strconv.Atoi(d[2])
+		ribbonPresent := (l * 2) + (w * 2) + (h * 2) - (max(l, w, h) * 2)
+		ribbonBow := l * w * h
+		totalRibbon += ribbonPresent + ribbonBow
+	}
+	return totalRibbon
 }
 
 func readInput(filename string) (string, error) {
