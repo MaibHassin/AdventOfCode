@@ -1,0 +1,43 @@
+# Advent of Code Specific Ignored Files
+# All text files (including puzzle inputs and outputs)
+*.txt
+
+# Go Specific Ignored Files
+# Compiled executables
+# General executable catch-all (if not explicitly named, e.g., for `go build`)
+*/Go/*/Day*/*
+# Common executable extensions
+*.exe
+*.out
+*.bin
+
+# Binaries for programs and plugins
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Compiled package archives
+*.a
+*.o
+
+# Test binaries
+*.test
+
+# Editor/OS Specific Ignored Files
+# VS Code
+.vscode/
+
+# Neovim swap files
+*.swp
+*.swo
+
+# Go workspace file
+go.work
+go.work.sum
+
+# env file
+.env
+
+# Temporary files
+*~
