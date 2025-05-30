@@ -18,27 +18,38 @@ func main() {
 	}
 
 	coordinates := make(map[string]bool, len(input))
+	xSanta, ySanta := 0, 0
+	xRobot, yRobot := 0, 0
 
-	x, y := 0, 0
-	coordinates[fmt.Sprintf("%d,%d", x, y)] = true
-	for _, d := range strings.Split(input, "") {
-		switch d {
-		case "^":
-			y += 1
-			coordinates[fmt.Sprintf("%d,%d", x, y)] = true
-		case "v":
-			y -= 1
-			coordinates[fmt.Sprintf("%d,%d", x, y)] = true
-		case ">":
-			x += 1
-			coordinates[fmt.Sprintf("%d,%d", x, y)] = true
-		case "<":
-			x -= 1
-			coordinates[fmt.Sprintf("%d,%d", x, y)] = true
+	for i, d := range strings.Split(input, "") {
+		isEven := i%2 == 0
+		if isEven {
+			xSanta, ySanta = move(d, xSanta, ySanta)
+			coordinates[fmt.Sprintf("%d,%d", xSanta, ySanta)] = true
+		} else {
+			xRobot, yRobot = move(d, xRobot, yRobot)
+			coordinates[fmt.Sprintf("%d,%d", xRobot, yRobot)] = true
 		}
-
 	}
 	fmt.Println(len(coordinates))
+}
+
+func move(d string, x, y int) (int, int) {
+	switch d {
+	case "^":
+		y += 1
+		return x, y
+	case "v":
+		y -= 1
+		return x, y
+	case ">":
+		x += 1
+		return x, y
+	case "<":
+		x -= 1
+		return x, y
+	}
+	return 0, 0
 }
 
 func readInput(filename string) (string, error) {
