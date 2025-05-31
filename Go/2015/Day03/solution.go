@@ -9,6 +9,7 @@ import (
 
 func main() {
 	inputFileName := flag.String("input", "input.txt", "Path to the input file")
+	numAgents := flag.Int("agents", 1, "Number of agents")
 	flag.Parse()
 
 	input, err := readInput(*inputFileName)
@@ -16,40 +17,45 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+	minHousesVisited := countHousesVisited(input, *numAgents)
+	fmt.Printf("Total unique houses visited by %d agent(s) are %d\n", *numAgents, minHousesVisited)
 
-	coordinates := make(map[string]bool, len(input))
-	xSanta, ySanta := 0, 0
-	xRobot, yRobot := 0, 0
-
-	for i, d := range strings.Split(input, "") {
-		isEven := i%2 == 0
-		if isEven {
-			xSanta, ySanta = move(d, xSanta, ySanta)
-			coordinates[fmt.Sprintf("%d,%d", xSanta, ySanta)] = true
-		} else {
-			xRobot, yRobot = move(d, xRobot, yRobot)
-			coordinates[fmt.Sprintf("%d,%d", xRobot, yRobot)] = true
-		}
-	}
-	fmt.Println(len(coordinates))
 }
 
-func move(d string, x, y int) (int, int) {
-	switch d {
-	case "^":
-		y += 1
-		return x, y
-	case "v":
-		y -= 1
-		return x, y
-	case ">":
-		x += 1
-		return x, y
-	case "<":
-		x -= 1
-		return x, y
+type Point struct {
+	X int
+	Y int
+}
+
+func countHousesVisited(c string, numOfAgents int) int {
+	coordinates := make(map[Point]bool, len(c))
+	agents := make([]Point, numOfAgents)
+
+	for _, initialPos := range agents {
+		coordinates[initialPos] = true
 	}
-	return 0, 0
+	for i, d := range c {
+		agentNumber := i % numOfAgents
+
+		agents[agentNumber] = move(d, agents[agentNumber])
+		coordinates[agents[agentNumber]] = true
+	}
+	return len(coordinates)
+}
+
+func move(d rune, currentPos Point) Point {
+	newPos := currentPos
+	switch d {
+	case '^':
+		newPos.Y += 1
+	case 'v':
+		newPos.Y -= 1
+	case '>':
+		newPos.X += 1
+	case '<':
+		newPos.X -= 1
+	}
+	return newPos
 }
 
 func readInput(filename string) (string, error) {
