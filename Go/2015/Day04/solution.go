@@ -6,7 +6,6 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"runtime"
 	"strconv"
 	"strings"
 )
@@ -23,7 +22,6 @@ func main() {
 	}
 
 	number := computeMD5Hash(input, *numZeros)
-
 	fmt.Printf("Original Key: %s\n", input)
 	fmt.Printf("Lowest positive number: %d\n", number)
 }
