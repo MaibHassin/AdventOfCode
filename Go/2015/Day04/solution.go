@@ -23,9 +23,8 @@ func main() {
 	}
 
 	number := computeMD5Hash(input, *numZeros)
-	fmt.Printf("runtime.NumCPU(): %v\n", runtime.NumCPU())
 
-	fmt.Printf("Original Text: %s\n", input)
+	fmt.Printf("Original Key: %s\n", input)
 	fmt.Printf("Lowest positive number: %d\n", number)
 }
 
