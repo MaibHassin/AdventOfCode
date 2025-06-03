@@ -15,10 +15,11 @@ AdventOfCode/
 │   │   ├── Day01/
 │   │   │   ├── input.txt
 │   │   │   ├── solution.go
-│   │   │   └── solution_alt_approach.go  # Example of an alternative solution
-│   │   └── 2016/
-│   │       └── Day01/
-│   │           └── ...
+│   │   │   └── alt_approach/
+|   |   |       └── solution_alt_approach.go  # Example of an alternative solution
+│   │   └── Day01-idiomatic-approach/
+│   │       ├── input.txt
+│   │       └── solution.go
 ├── JavaScript/
 │   ├── 2015/
 │   │   └── Day01/
