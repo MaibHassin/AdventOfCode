@@ -18,7 +18,7 @@ type Lights struct {
 	grid [1000][1000]bool
 }
 
-func NewLightsMap() *Lights {
+func NewLightsGrid() *Lights {
 	return &Lights{}
 }
 
@@ -120,7 +120,7 @@ func main() {
 }
 
 func Part1(input []string) {
-	xmasLights := NewLightsMap()
+	xmasLights := NewLightsGrid()
 
 	for _, ti := range input {
 		xmasLights.SwitchLights(parseInstructions(ti))
