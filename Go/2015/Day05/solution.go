@@ -29,10 +29,8 @@ func main() {
 func NaughtyOrNice(list []string) int {
 	niceStringCount := 0
 	for _, line := range list {
-		if !containsForbiddenSubstrings(line) {
-			if hasMinThreeVowels(line) && hasDoubleLetters(line) {
-				niceStringCount += 1
-			}
+		if !containsForbiddenSubstrings(line) && hasMinThreeVowels(line) && hasDoubleLetters(line) {
+    			niceStringCount += 1
 		}
 	}
 	return niceStringCount
@@ -99,6 +97,8 @@ func hasRepeatingLetterWithOneBetween(line string) bool {
 	}
 	return false
 }
+
+// Helper functions
 
 func possibleSubStrings(line string) []string {
 	possibleSubStrings := make([]string, 0)
