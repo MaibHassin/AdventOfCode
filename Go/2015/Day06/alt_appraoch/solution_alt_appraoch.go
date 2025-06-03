@@ -55,8 +55,53 @@ func (lm *Lights) litLights() {
 	fmt.Printf("Number of lit lights: %d\n", litLightsCount)
 }
 
+type LightsWithBrightness struct {
+	grid [1000][1000]int
+}
+
+func NewLightsWithBrightnessMap() *LightsWithBrightness {
+	return &LightsWithBrightness{}
+}
+
+func (lm *LightsWithBrightness) changeBrightness(action int, startCoords, endCoords []int) {
+	x_start := startCoords[0]
+	x_end := endCoords[0]
+	y_start := startCoords[1]
+	y_end := endCoords[1]
+
+	for y := y_start; y <= y_end; y++ {
+		for x := x_start; x <= x_end; x++ {
+
+			switch action {
+			case off:
+				if lm.grid[x][y]-1 < 0 {
+					lm.grid[x][y] = 0
+				} else {
+					lm.grid[x][y] -= 1
+				}
+			case on:
+				lm.grid[x][y] += 1
+			case toggle:
+				lm.grid[x][y] += 2
+			}
+		}
+	}
+}
+
+func (lm *LightsWithBrightness) litLightsBrightness() {
+	totalBrightness := 0
+	for _, row := range lm.grid {
+		for _, value := range row {
+			totalBrightness += value
+		}
+	}
+
+	fmt.Printf("The total brightness of lights is: %d\n", totalBrightness)
+}
+
 func main() {
 	inputFileName := flag.String("input", "../input.txt", "Path to the input file")
+	part := flag.Int("part", 1, "Please select which part do you want to run (1 or 2)")
 	flag.Parse()
 
 	input, err := readInput(*inputFileName)
@@ -65,12 +110,31 @@ func main() {
 		os.Exit(1)
 	}
 
-	xmas_lights := NewLightsMap()
+	switch *part {
+	case 1:
+		Part1(input)
+	case 2:
+		Part2(input)
+	}
+
+}
+
+func Part1(input []string) {
+	xmasLights := NewLightsMap()
 
 	for _, ti := range input {
-		xmas_lights.SwitchLights(parseInstructions(ti))
+		xmasLights.SwitchLights(parseInstructions(ti))
 	}
-	xmas_lights.litLights()
+	xmasLights.litLights()
+}
+
+func Part2(input []string) {
+	lightsBrightness := NewLightsWithBrightnessMap()
+
+	for _, ti := range input {
+		lightsBrightness.changeBrightness(parseInstructions(ti))
+	}
+	lightsBrightness.litLightsBrightness()
 }
 
 func parseInstructions(instruction string) (int, []int, []int) {
