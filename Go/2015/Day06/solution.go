@@ -1,3 +1,11 @@
+/*************************************************************************
+
+
+IMPLEMENTED PART 2 IN "alt_approach" BECAUSE ITS MORE EFFICIENT SOLUTION
+
+
+*************************************************************************/
+
 package main
 
 import (
