@@ -5,13 +5,15 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/MaibHassin/AdventOfCode/Go/readfile"
 )
 
 func main() {
 	inputFileName := flag.String("input", "input.txt", "Path to the input file")
 	flag.Parse()
 
-	input, err := readInput(*inputFileName)
+	input, err := readfile.ReadFileToString(*inputFileName)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -37,13 +39,4 @@ func main() {
 
 	fmt.Printf("Santa ends up on: %d\n", finalFloor)
 	fmt.Printf("First position when santa enters the basement: %d\n", firstNegative)
-}
-
-func readInput(filename string) (string, error) {
-	data, err := os.ReadFile(filename)
-	if err != nil {
-		return "", fmt.Errorf("Failed to read file '%s': %w", filename, err)
-	}
-	content := strings.TrimSpace(string(data))
-	return content, nil
 }
